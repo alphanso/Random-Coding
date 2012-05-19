@@ -1,0 +1,41 @@
+PTA
+Digit recognizer takes 7 numbers as input and outputs number if pattern correspinding to a number or else outputs nothing
+
+pta.cpp contains the main algorithm for training
+
+pta_main.cpp contains the main function for running algorithm in pta.cpp
+
+BACK PROPAGATION
+parity.in and palindrome.in are input for back_propagation.cpp
+Example:-
+1.
+$ g++ back_propagation.cpp
+$ ./a.out <parity.in 
+
+2. 
+$ g++ back_propagation.cpp
+$ ./a.out
+
+Enter no of Inputs
+2
+Enter no pf hidden layer perceptron
+2
+Enter truth table
+1 0 1 
+0 1 1
+0 0 0
+1 1 0
+Threshold w1 w2 ...
+Initial value of weights and threshold
+4 2 4 
+2 1 1 
+4 2 0 
+Weight training Complete
+8.94154 5.89551 6.31955 
+2.50622 5.84786 6.00967 
+-5.48601 -3.65679 -3.69342 
+in1 in2 in3.. output ideal_output
+1 0 0.900059  1
+0 1 0.900172  1
+0 0 0.099445  0
+1 1 0.0998973  0

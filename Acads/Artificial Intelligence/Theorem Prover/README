@@ -1,0 +1,9 @@
+Incorrect Input
+P->P
+P->Q
+
+Correct Input
+(P->P)
+(P->Q)
+
+An arrow (->) should always have a pair of brackets
