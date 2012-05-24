@@ -29,6 +29,7 @@ public:
 int main()
 {
   int N;
+  const int MOD = 420; //LCM of 1..7
   while(true)
     {
       cin >> N;
@@ -46,8 +47,8 @@ int main()
       vertex t;
       t.v = 0;
       if(c[0] > 1) t.div = 1 << (c[0] - 2);
-      t.rem = (c[0] % 420);
-
+      t.rem = (c[0] % MOD);
+      
       queue<vertex> q;
       q.push(t);
       
@@ -56,4 +57,12 @@ int main()
 	  vertex f = q.front();
 	  q.pop();
 	  
-	  
+	  for(int i = 0; i < N; i++)
+	    {
+	      if(a[q.v][i])
+		{
+		  t.v = i;
+		  if(c[i] > 1) t.div |= 1 << (c[i] - 2);
+		  t.rem = ((f.rem * 10) + c[0]) % MOD; 
+		  
+		  
