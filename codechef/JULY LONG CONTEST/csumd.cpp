@@ -24,8 +24,8 @@
  
 using namespace std;
  
-typedef long long int64;
-typedef unsigned long long uint64;
+typedef long long ll;
+typedef unsigned long long ull;
 #define two(X) (1<<(X))
 #define twoL(X) (((int64)(1))<<(X))
 #define contain(S,X) (((S)&two(X))!=0)
@@ -40,6 +40,19 @@ typedef pair<int,int> ipair;
 #define LENGTH(A) ((int)A.length())
 #define MP(A,B) make_pair(A,B)
 #define PB(X) push_back(X)
+#define MOD 1000000007
+
+ll modPow(ll a, ll x, ll p)
+{
+  ll res = 1;
+  while(x > 0)
+    {
+      if(x % 2) res = (res * a) % p;
+      a = (a * a) % p;
+      x /= 2;
+    }
+  return res;
+}
 
 int main()
 {
@@ -48,11 +61,20 @@ int main()
   while(T--)
     {
       scanf("%d", &N);
-      int c1 = N, c2 = 0, c = 0;
-      for(; c1 != 0; c1 -= 2, c2++)
+      int c1 = N, c2 = 0, c = 1;
+      ll ans = 0, inv2 = modPow(2, MOD - 2, MOD);
+      c = modPow(2, c1 + c2 - 1, MOD);
+      for(; c1 != -2 && c1 != -1; c1 -= 2)
 	{
-	  c += (c1 + c2)
+	  ans += c;
+	  if(ans > MOD) ans %= MOD;
+	  c2++;
+	  c = (c * inv2) % MOD;
+	  c = (c * (N - c2)) % MOD;
+	  c = (c * modPow(c2, MOD - 2, MOD)) % MOD;
+	  cerr << c << endl;
 	}
+      printf("%lld\n", ans);
     }
   return 0;
 }
