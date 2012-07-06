@@ -41,9 +41,20 @@ typedef pair<int,int> ipair;
 #define MP(A,B) make_pair(A,B)
 #define PB(X) push_back(X)
 
+void print(multiset<int> m)
+{
+  while(!m.empty())
+    {
+      cout << *(m.begin()) << " ";
+      m.erase(m.begin());
+    }
+  cout << endl;
+}
+
 int main()
 {
-  multiset<int> m1, m2;
+  multiset<int> m;
+  multiset<int>::reverse_iterator rit;
   int N, x, s, i = 0;
   scanf("%d", &N);
   while(N--)
@@ -53,31 +64,16 @@ int main()
 	{
 	  scanf("%d", &x);
 	  i++;
-	  if(i % 3 == 0)
-	    {
-	      if(x > *(m1.begin() + m1.size() - 1))
-		m2.insert(x);
-	      else 
-		{
-		  m1.insert(x);
-		  m2.insert(*(m1.begin() + m1.size() - 1));
-		  m1.erase(m1.begin() + m1.size() - 1);
-		}
-	    }
-	  else
-	    {
-	      if(x > *(m2.begin()))
-		{
-		  m2.insert(x);
-		  m1.insert(*(m2.begin()));
-		  m2.erase(m2.begin());
-		}
-	      else m1.insert(x);
-	    }
+	  m.insert(x);
+	  if(i == 3) rit = m.rbegin();
+	  else if(!(i % 3) ) rit++;
+	  if(i > 3 && x > *rit) rit--;
+	  print(m);
 	}
       else
 	{
-	  printf("%d\n", *(m2.begin()));
+	  if(i < 3) printf("No reviews yet\n");
+	  else printf("%d\n", *(rit));
 	}
     }
   return 0;
