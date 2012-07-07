@@ -50,6 +50,16 @@ void print(multiset<int> m)
     }
   cout << endl;
 }
+template<class T>
+int distance1(T a, T b)
+{
+  int ans = 0;
+  while(a != b)
+    {
+      b++;ans++;
+    }
+  return ans;
+}
 
 int main()
 {
@@ -65,18 +75,24 @@ int main()
 	  scanf("%d", &x);
 	  i++;
 	  m.insert(x);
-	  if(i == 3) rit = m.rbegin();
-	  else if(!(i % 3) ) rit++;
 	  if(i > 3 && x > *rit) rit--;
-	  print(m);
+	  if(i == 3) rit = m.rbegin();
+	  else if(!(i % 3)) rit++;
+	  // print(m);
 	}
       else
 	{
+	  // cerr << i << endl;
 	  if(i < 3) printf("No reviews yet\n");
+	  // else
+	  // else if(distance1(rit, m.rbegin())+1 != m.size() / 3) {
+	  //   printf("%d\n", *(rit));
+	  //   printf("%d %d\n", distance1(rit, m.rbegin()), m.size()/3);
+	  //   print(m);
+	  //   break;
+	  // }
 	  else printf("%d\n", *(rit));
 	}
     }
   return 0;
 }
-	  
-  
