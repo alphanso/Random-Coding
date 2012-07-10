@@ -27,54 +27,41 @@ using namespace std;
 #define SQR(a) (a)*(a)  
 #define MP make_pair  
    
-typedef long long ll;  
+typedef unsigned long long ull;  
+
+string solve(int N)
+{
+  string y = "Yes";
+  string n = "No";
+  if(N > 67) 
+    {
+      ull A;
+      while(N--)
+	scanf("%llu", &A);
+      return y;
+    }
+  else 
+    {
+      ull A[N];
+      FOR(i, 0, N)
+	scanf("%llu", A + i);
+      
+      for(int i = 0; i < N; i++)
+	for(int j = i+1; j < N; j++)
+	  for(int k = j+1; k < N; k++)
+	    for(int l = k+1; l < N; l++){
+	      if((A[i]^A[j]^A[k]^A[l]) <= 0){ 
+		return y;
+	      }
+	    }
+      return n;
+    }
+}
 
 int main()
 {
-  int N, i;
-  set<ll> pos;
-  ll A, prev, cpos, ppos = 66;
-  bool flag1 = false, flag2 = false;
-  string output = "No";
-
-  scanf("%d", &N);  
-  if(N > 66) 
-    {
-      while(N--)
-	scanf("%lld", &A);
-      printf("YES\n");
-      return 0;
-    }
-  scanf("%lld", &prev);
-  
-  for(i = 1; i < N; i++)
-    {
-      scanf("%lld", &A);
-      if(flag1 && flag2) break;
-      cpos = A^prev;
-      // cerr << cpos << endl;
-      if(ppos == cpos)
-	{
-	  if(!flag1) flag1 = true;
-	  else {flag2 = true; output = "Yes";}
-	  ppos = 66;
-	  prev = A;
-	  continue;
-	}
-      if(pos.find(cpos) != pos.end())
-	{
-	  output = "Yes";
-	  break;
-	}
-      pos.insert(cpos);
-      prev = A;
-      ppos = cpos;
-    }
-  
-  for(int j = i  + 1; j < N; j++)
-    scanf("%lld", &A);
-  if(output == "Yes") printf("Yes\n");
-  else printf("No\n");
+  int N;
+  scanf("%d", &N);
+  cout << solve(N) << endl;
   return 0;
 }
-      
