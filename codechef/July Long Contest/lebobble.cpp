@@ -61,16 +61,24 @@ bool operator < (typePair a, typePair b)
   return a.B < b.B;
 }
 
+void print(multiset<typePair> s)
+{
+  for(multiset<typePair>::iterator it = s.begin(); it != s.end(); it++)
+    cout << "(" << it->B << ", " << it->P << ") ";
+  cout << endl;
+}
+
 int B[50000];
 
 int main()
 {
   int T, n, d;
   float P;
-  scanf("%d", &T);
   multiset<typePair> s;
+  multiset<typePair>::reverse_iterator rit;
   double ans = 0.0000;
 
+  scanf("%d", &T);
   while(T--)
     {
       scanf("%d %d", &n, &d);
@@ -84,40 +92,17 @@ int main()
       for(int i = 1; i < n; i++)
 	{
 	  scanf("%f", &P);
-	  // multiset<typePair>::iterator p = 
-	  s.insert(create_pair(B[i], P / 100.00));
-	  // multiset<typePair>::iterator lb = s.upper_bound(create_pair(B[i] - d, 0));
-	  // multiset<typePair>::iterator ub = s.lower_bound(create_pair(B[i] + d, 0));
-      	  multiset<typePair>::reverse_iterator rit = s.rbegin();
-	  bool once = true;
-
-	  // cerr << p->B << " " << p->P << endl;
-	  // cerr << lb->B << " " << lb->P << endl;
-	  // if(ub == s.end()) cerr << "END" << endl; 
-	  // else cerr << ub->B << " " << ub->P << endl;
-
-	  // for(it = lb; it != p; it++)
-	  //   ans += (it->P * (100 - p->P)) / 10000.0000; 
-	  
-	  // for(it++; it != s.end() && it != ub; it++)
-	  //   ans += 1 - (((100 - it->P) * p->P) / 10000.0000);
-	 
-	  // for(it; it != s.end(); it++)
-	  //   ans += 1;
-	  // cerr << ans << endl;
 	  P = P / 100.00;
-	  for(rit; rit != s.rend(); ++rit)
-	    {
-	      if(rit->B == B[i] && rit->P == P && once) {once = false; continue;}
-	      if(rit->B > B[i] + d) ans += 1;
-	      else if(rit->B <= B[i] + d && rit->B > B[i]) ans += (1 - P * (1 - rit->P));
-	      else if(rit->B <= B[i] && rit->B > B[i] - d) ans += ((1 - P) * (rit->P));
-	      else break;
-	      // cerr << rit ->P << " " << P << endl;
-	    }
-	  // cerr << ans << endl;
-	}
+      	  rit = s.rbegin();
+	  
+	  while(rit->B > B[i] + d && rit != s.rend()) {ans++; ++rit;}
+	  while(rit->B > B[i] && rit != s.rend()) {ans += 1 - (P * (1 - rit->P)); ++rit;}
+	  s.insert(rit.base(), create_pair(B[i], P));
+	  rit++;
+	  while(rit->B > B[i] - d && rit != s.rend()) {ans += ((1 - P) * (rit->P)); ++rit;}
 
+	}
+      
       printf("%0.4f\n", ans);
       s.clear();
       ans = 0.0000;
