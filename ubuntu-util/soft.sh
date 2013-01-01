@@ -1,1 +1,1 @@
-apt-get install emacs vlc-nox lastfm
+apt-get install emacs vlc-nox

@@ -1,0 +1,78 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <iterator>
+#include <cmath>
+using namespace std;
+
+template<class T>
+vector<T> parse(const string& str, const char* cut=" ") 
+{
+   vector<T> re;
+   for(int j=0;j<str.size();j++)
+   {
+      string s;
+      while(j<str.size() && NULL==strchr(cut,str[j]))
+	 s+=str[j++];
+      if(!s.empty())
+      {
+	 T tmp;
+	 istringstream is(s);
+	 is>>tmp;
+	 re.push_back(tmp);
+      }
+   }
+   return re;
+}
+
+template <class T>
+T gcd(T m, T n)
+{
+   T r;
+   if (m < n) return gcd(n,m);
+   r = m%n;
+   if (r == 0) return(n);
+   else return(gcd(n,r));
+}
+
+template <class T>
+T gcd(vector<T> num)
+{
+   T N=num.size();
+   if(N==0) cerr<<"Vector given as argument is empty"<<endl;
+   sort(num.begin(),num.end());
+   T Limit=num[0];
+   for(T i=2;i<=Limit;i++)
+   {
+      T flag=0;
+      for(int j=0;j<N;j++)
+      {
+	 if(num[j]%i==0) flag++;
+	 else break;
+      }
+      if(flag==N) 
+      {
+	 for(int j=0;j<N;j++)
+	    num[j]/=i;
+	 return (i*gcd(num));
+      }
+   }
+   return 1;
+}
+
+template <class T>
+T lcm(vector<T> num)
+{
+   T N=num.size();
+   if(N==0) cerr<<"Vector given as argument is empty"<<endl;
+   else if(N==1) return num[0];
+   else 
+   {
+      typename vector<T>::iterator mid=num.begin()+(N/2);
+      vector<T> v1(num.begin(),mid);
+      vector<T> v2(mid,num.end());
+      T l1=lcm(v1);
+      T l2=lcm(v2);
+      return l1*l2/gcd<T>(l1,l2);
+   }
+}
